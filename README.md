@@ -6,5 +6,3 @@ Directory inputs should contain the full path.
 LIMITATIONS:
 
 For file contents, the program will only modify the file contents of .sql files unless the program is directly modified.
-
-The program will not work if directory names have quotation marks around them.
