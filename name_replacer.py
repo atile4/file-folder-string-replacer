@@ -1,7 +1,14 @@
 from pathlib import Path
 import shutil
 
-root : str = input("INPUT A DIRECTORY PATH: ")
+def directory_validator(root : str) -> str:
+    if root[0] == '\"':
+        root = root[1:]
+    if root[len(root)-1] == '\"':
+        root = root[:len(root)-1]
+    return root
+
+root : str = directory_validator(input("INPUT A DIRECTORY PATH: "))
 
 if not (Path(root).exists()):
     print("\nINVALID DIRECTORY INPUT PATH")
@@ -9,8 +16,8 @@ if not (Path(root).exists()):
 else:
     print("\nVALID DIRECTORY PATH\n")
     
-copy_root : str = input("INPUT AN OUTPUT PATH: ")
-if not (Path(copy_root).exists()):
+out_root : str = directory_validator(input("INPUT AN OUTPUT PATH: "))
+if not (Path(out_root).exists()):
     print("\nINVALID DIRECTORY OUTPUT PATH")
     exit()
 
@@ -43,12 +50,12 @@ def replacer(root_path: str, new_path: str, old: str, new: str):
                 with new_item_path.open("w", encoding="utf-8") as f:
                     f.write(content)
                     
-            # condition for non .txt files
+            # condition for non .sql files
             # just copies the file onto the new directory 
             else:
                 new_item_path.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(item, new_item_path)
 
-    print("COPY AND REPLACEMENT COMPLETED. NEW DIRECTORY CREATED IN", new_path)
+    print("\nCOPY AND REPLACEMENT COMPLETED. NEW DIRECTORY CREATED IN \"", new_path + "\"")
 
-replacer(root, copy_root, old, new)
+replacer(root, out_root, old, new)
