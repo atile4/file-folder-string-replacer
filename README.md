@@ -27,4 +27,6 @@ INPUT FILE TYPE: sql
 ## Known Issues
 - Inflexible directory path inputs 
 
-- The program will only modify the file contents of .sql files unless the program is directly modified.
+- The program will only modify one type of a specified text file.
+
+- Inputting a specified text file to modify is required rather than optional.
