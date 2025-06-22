@@ -3,6 +3,6 @@ Copies an inputted valid directory (and all of its contents) into a specified ou
 
 Directory inputs should contain the full path.
 
-LIMITATIONS:
+## Disclaimer
 
 For file contents, the program will only modify the file contents of .sql files unless the program is directly modified.
