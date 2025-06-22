@@ -6,25 +6,25 @@ def directory_validator(root : str) -> str:
         root = root[1:]
     if root[len(root)-1] == '\"':
         root = root[:len(root)-1]
-    return root
+
+    if not (Path(root).exists()):
+        print("\nINVALID DIRECTORY INPUT PATH")
+        exit()
+    else : return root
 
 root : str = directory_validator(input("INPUT A DIRECTORY PATH: "))
-
-if not (Path(root).exists()):
-    print("\nINVALID DIRECTORY INPUT PATH")
-    exit()
-else:
-    print("\nVALID DIRECTORY PATH\n")
-    
 out_root : str = directory_validator(input("INPUT AN OUTPUT PATH: "))
-if not (Path(out_root).exists()):
-    print("\nINVALID DIRECTORY OUTPUT PATH")
-    exit()
 
 old : str = input("\nINPUT TARGET STRING: ")
 new : str = input("\nINPUT REPLACEMENT STRING: ")
 
-def replacer(root_path: str, new_path: str, old: str, new: str):
+filetype : str = input("\nINPUT FILE TYPE YOU WANT MODIFIED (sql, txt): ").lower()
+
+if filetype not in ("sql", "txt"):
+    print("\nINVALID FILE TYPE.")
+    exit()
+
+def replacer(root_path: str, new_path: str, old: str, new: str, filetype : str):
     root_path = Path(root_path)
     new_path = Path(new_path)
 
@@ -40,7 +40,7 @@ def replacer(root_path: str, new_path: str, old: str, new: str):
             new_item_path.mkdir(parents=True, exist_ok=True)
         # if item is file
         elif item.is_file():
-            if item.suffix == ".sql":
+            if item.suffix == "."+filetype:
                 # read file and replace occurences of old with new
                 with item.open("r", encoding="utf-8") as f:
                     content = f.read().replace(old, new)
@@ -50,12 +50,11 @@ def replacer(root_path: str, new_path: str, old: str, new: str):
                 with new_item_path.open("w", encoding="utf-8") as f:
                     f.write(content)
                     
-            # condition for non .sql files
             # just copies the file onto the new directory 
             else:
                 new_item_path.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(item, new_item_path)
 
-    print("\nCOPY AND REPLACEMENT COMPLETED. NEW DIRECTORY CREATED IN \"", new_path + "\"")
+    print("\nCOPY AND REPLACEMENT COMPLETED. NEW DIRECTORY CREATED IN \""+ str(new_path) + "\"")
 
-replacer(root, out_root, old, new)
+replacer(root, out_root, old, new, filetype)
