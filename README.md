@@ -4,10 +4,10 @@ Copies an inputted valid directory (and all of its contents) into a specified di
 Directory inputs should contain the full path.
 
 ## Requirements
-Python 3.4 Interpreter or above for shutil and pathlib
+Python 3.4 Interpreter or above for shutil and pathlib modules
 
 ## Installation
-1. Download replacer.py
+1. Download main.py in the replacer folder
 2. Run the file in a command line
 
 ## Example Usage
